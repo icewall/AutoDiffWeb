@@ -1,0 +1,44 @@
+{
+  "name": "angular-route",
+  "version": "1.2.17-build.163.1",
+  "description": "This is a port of the bower-angular-route package for all the npm fans :)",
+  "main": "angular-route.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angular/bower-angular-route"
+  },
+  "keywords": [
+    "angular",
+    "angular-route",
+    "route"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angular/bower-angular-route/issues"
+  },
+  "homepage": "https://github.com/angular/bower-angular-route",
+  "_id": "angular-route@1.2.17-build.163.1",
+  "dist": {
+    "shasum": "68159153263a11e543beffc94b585ab406b3c43e",
+    "tarball": "http://registry.npmjs.org/angular-route/-/angular-route-1.2.17-build.163.1.tgz"
+  },
+  "_from": "angular-route@",
+  "_npmVersion": "1.4.3",
+  "_npmUser": {
+    "name": "mljsimone",
+    "email": "mljsimone@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "mljsimone",
+      "email": "mljsimone@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_shasum": "68159153263a11e543beffc94b585ab406b3c43e",
+  "_resolved": "https://registry.npmjs.org/angular-route/-/angular-route-1.2.17-build.163.1.tgz"
+}

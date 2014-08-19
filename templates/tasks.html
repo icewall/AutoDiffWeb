@@ -1,0 +1,20 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>CVE</th>
+        <th>Files</th>
+        <th>Files to diff</th>
+        <th>Diffed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="task in tasks">
+        <td><a href="#/Task/{{ task.name }}/info">{{ task.name }}</a></td>
+        <td>{{ task.cve }}</td>
+        <td>{{ task.files }}</td>
+        <td>{{ task.filesToDiff }}</td>
+        <td>{{ task.diffed }}</td>
+    </tr>
+    </tbody>
+</table>

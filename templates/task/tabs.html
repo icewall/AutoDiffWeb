@@ -1,0 +1,4 @@
+<tabset>
+    <tab ng-repeat="tab in tabs" select="go(tab.route)" active="tab.active" heading="{{tab.title}}"></tab>
+</tabset>
+<div ui-view></div>

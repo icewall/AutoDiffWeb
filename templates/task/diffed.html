@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Diff name</th>
+        <th>Status</th>
+        <th>Changed function</th>
+        <th>Changed functions - AutoDiffed</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="diff in diffed">
+        <td>{{ diff.diff_name }}</td>
+        <td>{{ diff.status }}</td>
+        <td>{{ diff.changed_functions }}</td>
+        <td>{{ diff.autodiff_changed_functions}}</td>
+    </tr>
+    </tbody>
+</table>
