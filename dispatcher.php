@@ -1,8 +1,18 @@
 <?php
+
+/* CONSTANTS */
+const ROOT_DIR =  __DIR__;
+
 include "config/Config.php";
 
 
 include "controller/Task.php";
+include "controller/Agent.php";
+include "controller/Command.php";
+include "controller/Storage.php";
+include "controller/Diff.php";
+
+
 
 $params = explode("/",$_SERVER["REQUEST_URI"]);
 

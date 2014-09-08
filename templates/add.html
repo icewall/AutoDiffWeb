@@ -1,60 +1,52 @@
-<form class="form-horizontal" role="form">
+<form class="form-horizontal" role="form" ng-submit="processForm()">
     <div class="form-group">
         <label class="col-sm-2 control-label">Name:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="Set some name">
+            <input type="text" class="form-control" placeholder="Set some name" ng-model="formData.name">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">CVE:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="cve-xxx-xx">
+            <input type="text" class="form-control" placeholder="cve-xxx-xx" ng-model="formData.cve">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">MS:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="MS14-014">
+            <input type="text" class="form-control" placeholder="MS14-014" ng-model="formData.ms">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">New patch URL:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="URL">
+            <input type="text" class="form-control" placeholder="URL" ng-model="formData.url_new">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Old patch URL:</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" placeholder="URL">
+            <input type="text" class="form-control" placeholder="URL" ng-model="formData.url_old">
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Specify product:</label>
         <div class="col-sm-10">
-            <select class="form-control">
-                <option value="any">Any</option>
-                <option value="IE">IE</option>
-                <option value="FlashPlayer">Flash Player</option>
-                <option value="Java">Java</option>
+            <select class="form-control" ng-model="formData.product" ng-options="thisProduct.type as thisProduct.name for thisProduct in products">
             </select>
         </div>
     </div>
     <div class="form-group">
-        <label class="col-sm-2 control-label">Assigned files to diff:</label>
+        <label class="col-sm-2 control-label">Assign files to diff:</label>
         <div class="col-sm-10">
-            <select class="form-control">
-                <option value="a">Automatically</option>
-                <option value="m">Manually</option>
+            <select class="form-control" ng-model="formData.mode" ng-options="thisMode.type as thisMode.name for thisMode in modes">
             </select>
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-2 control-label">Agent:</label>
         <div class="col-sm-10">
-            <select class="form-control">
-                <option value="007">Agent-XP_x86</option>
-                <option value="007">Agent-Win7_x64</option>
+            <select class="form-control" ng-model="formData.agent" ng-options="thisAgent.id as thisAgent.id for thisAgent in agents">
             </select>
         </div>
     </div>
@@ -64,3 +56,7 @@
         </div>
     </div>
 </form>
+
+<pre>
+    {{ formData }}
+</pre>

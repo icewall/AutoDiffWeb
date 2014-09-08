@@ -16,31 +16,6 @@ autoDiffApp.run(
     ]
 )
 
-//autoDiffApp.config(
-//['$routeProvider',
-//    function($routeProvider){
-//        $routeProvider.
-//            when('/Tasks',{
-//                templateUrl:"templates/diff/tasks.html",
-//                controller: "TasksController"
-//            }).
-//            when('/Add',{
-//                templateUrl:"templates/diff/add.html"
-//            }).
-//            when('/Task/:name/:tabName',{
-//                templateUrl: "templates/task/tabs.html",
-//                controller:  "TabsCtrl"
-//            }).
-//            when("/Statistics",{
-//                templateUrl: "templates/task/tabs.html",
-//                controller: "testController"
-//            }).
-//            otherwise({
-//                templateUrl:"templates/welcome.html"
-//            });
-//    }
-//]
-//);
 autoDiffApp.config(function($stateProvider, $urlRouterProvider,$httpProvider){
 
     $urlRouterProvider
@@ -55,16 +30,17 @@ autoDiffApp.config(function($stateProvider, $urlRouterProvider,$httpProvider){
     )
         .state("add",{
             url:"/Add",
-            templateUrl:"templates/add.html"
+            templateUrl:"templates/add.html",
+            controller: "AddTaskController"
         })
-        .state("diff",{
+        .state("tasks",{
             url:"/Tasks",
             templateUrl: "templates/tasks.html",
             controller: "TasksController"
         })
         .state("task",{
             abstract: true,
-            url: "/Task/:patchName",
+            url: "/Task/:task_name",
             templateUrl: "templates/task/tabs.html",
             controller: "TabsCtrl"
         })

@@ -1,49 +1,71 @@
-<div class="row">
-    <div class="col-md-6">
-        <table class="table table-striped">
-            <caption>New</caption>
-            <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>mshtml.dll</td>
-                    <td><input type="radio" name="optionsNew"checked></td>
-                </tr>
-                <tr>
-                    <td>ieuser.exe</td>
-                    <td><input type="radio" name="optionsNew"></td>
-                </tr>
-            </tbody>
-        </table>
+<div class="row" style="padding-top:  5px">
+    <div class="col-md-1 col-md-offset-5">
+        <h4><span class="label label-primary">Filter:</span></h4>
     </div>
-    <div class="col-md-6">
-        <table class="table table-striped">
-            <caption>Old</caption>
-            <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>mshtml.dll</td>
-                <td><input type="radio" name="optionsOld" checked></td>
-            </tr>
-            <tr>
-                <td>ieuser.exe</td>
-                <td><input type="radio" name="optionsOld"></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="col-md-6" style="padding-top: 8px">
+        <input type="text" ng-model="query"/>
     </div>
 </div>
-<form class="form-horizontal" role="form">
+<div class="row">
+    <div class="col-md-2 col-md-offset-5">
+        <h4><span class="label label-primary">Show full path:</span></h4>
+    </div>
+    <div class="col-md-1" style="padding-top: 10px">
+        <input type="checkbox" ng-model="checked"/>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-offset-6">
+                <h3><label class="label label-info">New</label></h3>
+            </div>
+        </div>
+        <div class="row" ng-repeat="file in files.new | filter:query">
+            <div class="col-md-10" ng-show="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.filePath }}</div>
+            <div class="col-md-10" ng-hide="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.fileName }}</div>
+            <div class="col-md-2" ng-class-even="'alert-success'" ng-class-odd="'alert-info'"><input type="radio" name="optionsNew" ng-model="$parent.formDiff.newID" btn-radio="file.id"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-offset-6">
+                <h3><label class="label label-info">Old</label></h3>
+            </div>
+        </div>
+        <div class="row" ng-repeat="file in files.old | filter:query">
+            <div class="col-md-10" ng-show="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.filePath }}</div>
+            <div class="col-md-10" ng-hide="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.fileName }}</div>
+            <div class="col-md-2" ng-class-even="'alert-success'" ng-class-odd="'alert-info'"><input type="radio" name="optionsOld" ng-model="$parent.formDiff.oldID" btn-radio="file.id"></div>
+        </div>
+    </div>
+</div>
+
+<form class="form-horizontal" role="form" ng-submit="formAddDiffProcess()">
     <div class="form-group">
-        <div class="col-sm-offset-5 col-sm-10">
+        <div class="col-md-offset-5 col-md-10">
             <button type="submit" class="btn btn-success">Add to diff</button>
         </div>
     </div>
 </form>
+<form class="form-inline" role="form" ng-submit="formUnpackProcess()">
+    <div class="col-md-offset-5 col-md-12">
+        <div class="form-group">
+            <button type="submit" class="btn btn-info">Unpack</button>
+        </div>
+        <div class="form-group">
+            <span class="label label-info">File type:</span>
+        </div>
+        <div class="form-group">
+            <select class="form-control" ng-model="formUnpack.type" ng-options="thisType.type as thisType.name for thisType in types">
+            </select>
+        </div>
+    </div>
+</form>
+<pre>
+    {{ newFile }}
+    {{ oldFile }}
+</pre>
+

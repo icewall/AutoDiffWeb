@@ -10,7 +10,7 @@ class TaskModel extends Model{
     public function getTask($agentID)
     {
 
-        $statement = $this->mDatabase->prepare("SELECT * FROM Task WHERE agent_id = :agentID and status = 'progress'");
+        $statement = $this->mDatabase->prepare("SELECT * FROM Task WHERE agent_id = :agentID");
         $statement->bindValue(":agentID",$agentID);
         $statement->execute();
         $result = $statement->fetch();
@@ -18,11 +18,11 @@ class TaskModel extends Model{
             return Array();
         return $result;
     }
-    public function getTaskByName($patchName)
+    public function getTaskByName($task_name)
     {
 
-        $statement = $this->mDatabase->prepare("SELECT * FROM Task WHERE name = :patchName");
-        $statement->bindValue(":patchName",$patchName);
+        $statement = $this->mDatabase->prepare("SELECT * FROM Task WHERE name = :task_name");
+        $statement->bindValue(":task_name",$task_name);
         $statement->execute();
         $result = $statement->fetch();
         if( !$result )
@@ -38,5 +38,39 @@ class TaskModel extends Model{
         if( !$result )
             return Array();
         return $result;
+    }
+    public function addTask($task)
+    {
+        $statement = $this->mDatabase->prepare("INSERT INTO Task VALUES(null,:name
+                                                                            ,:agent_id
+                                                                            ,:cve
+                                                                            ,:ms
+                                                                            ,:product
+                                                                            ,:url_new
+                                                                            ,:url_old
+                                                                            ,0
+                                                                            ,0
+                                                                            ,0
+                                                                            ,:mode
+                                                                            )");
+
+        $statement->bindValue(":name",$task["name"]);
+        $statement->bindValue(":agent_id",$task["agent"]);
+        $statement->bindValue(":cve",$task["cve"]);
+        $statement->bindValue(":ms",$task["ms"]);
+        $statement->bindValue(":product",$task["product"]);
+        $statement->bindValue(":url_new",$task["url_new"]);
+        $statement->bindValue(":url_old",$task["url_old"]);
+        $statement->bindValue(":mode",$task["mode"]);
+        $statement->execute();
+        print_r($statement->errorInfo());
+    }
+    public function updateFiles($task_name,$amount)
+    {
+        $statement = $this->mDatabase->prepare("UPDATE Task SET files = :amount WHERE name = :task_name");
+        $statement->bindValue(":amount",$amount);
+        $statement->bindValue(":task_name",$task_name);
+        $statement->execute();
+        print_r($statement->errorInfo());
     }
 }
