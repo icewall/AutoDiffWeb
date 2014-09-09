@@ -43,6 +43,15 @@ class TaskController extends Controller {
     public function addTask()
     {
         $this->getModel("Task")->addTask($_POST);
+
+        /*
+         * Add Command for agent related with this task
+         */
+        $params = Array("agent"=> $_POST["agent"],
+                        "command" => "getTask",
+                        "params"  => $_POST['name']
+                    );
+        $this->getModel("Command")->addCommand($params);
     }
 
 }

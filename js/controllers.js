@@ -44,13 +44,14 @@ autoDiffControllers.controller("AddTaskController",['$scope','$http','$state',
             console.log("processForm");
             $http.post("Task/addTask",$scope.formData);
             //we should also add command for specified agent
-            $http.post("Command/addCommand",
-                {
-                    agent: $scope.formData["agent"],
-                    command: "getTask",
-                    params: ""
-                }
-            );
+            //MOVED TO BACKEND
+//            $http.post("Command/addCommand",
+//                {
+//                    agent: $scope.formData["agent"],
+//                    command: "getTask",
+//                    params: ""
+//                }
+//            );
 
             $state.go("task.info",{task_name : $scope.formData.name});
         };
@@ -60,6 +61,16 @@ autoDiffControllers.controller("AddTaskController",['$scope','$http','$state',
 autoDiffControllers.controller("TabsCtrl",['$scope','$http','$state','$stateParams',
     function($scope, $http,$state,$stateParams) {
         console.log("TabsCtrl");
+
+        /*
+            Get agent name related with this task
+         */
+        $http.post("Task/getTaskByName",{task_name: $stateParams.task_name}).success(
+            function(data)
+            {
+                sessionStorage.agent = data["agent_id"];
+            });
+
 
         $scope.tabs =
             [
@@ -108,28 +119,34 @@ autoDiffControllers.controller("FilesController",['$scope',"$state","$stateParam
                 $scope.files = data;
             }
         )
+        $scope.formDiff = {}
 
         /*
             Unpacking things
         */
-        $scope.formUnpack = {};
         $scope.types = [
                         {name: "Auto", type:"auto"},
                         {name: "CAB",  type:".cab"},
                         {name: "ZIP",  type:".zip"}
                        ];
 
-        $scope.formUnpack.type = "auto";
+        $scope.formDiff.type = "auto";
 
         $scope.formUnpackProcess = function()
         {
             console.log("formUnpackProcess");
+            $scope.formDiff.task_name = $stateParams.task_name;
+            $http.post("Command/addCommand",
+                        {agent : sessionStorage.agent,
+                         command : "unpack",
+                         params  : JSON.stringify($scope.formDiff)
+                        }
+            );
         }
 
         /*
             Files things
         */
-        $scope.formDiff = {}
         $scope.formAddDiffProcess = function()
         {
             $scope.formDiff.task_name = $stateParams.task_name;

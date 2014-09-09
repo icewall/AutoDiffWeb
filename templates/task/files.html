@@ -24,7 +24,7 @@
         <div class="row" ng-repeat="file in files.new | filter:query">
             <div class="col-md-10" ng-show="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.filePath }}</div>
             <div class="col-md-10" ng-hide="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.fileName }}</div>
-            <div class="col-md-2" ng-class-even="'alert-success'" ng-class-odd="'alert-info'"><input type="radio" name="optionsNew" ng-model="$parent.formDiff.newID" btn-radio="file.id"></div>
+            <div class="col-md-2" ng-class-even="'alert-success'" ng-class-odd="'alert-info'"><input type="radio" name="optionsNew" ng-model="$parent.formDiff.newID" btn-radio="file.id" value="false"></div>
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
         <div class="row" ng-repeat="file in files.old | filter:query">
             <div class="col-md-10" ng-show="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.filePath }}</div>
             <div class="col-md-10" ng-hide="checked" ng-class-even="'alert-success'" ng-class-odd="'alert-info'">{{ file.fileName }}</div>
-            <div class="col-md-2" ng-class-even="'alert-success'" ng-class-odd="'alert-info'"><input type="radio" name="optionsOld" ng-model="$parent.formDiff.oldID" btn-radio="file.id"></div>
+            <div class="col-md-2" ng-class-even="'alert-success'" ng-class-odd="'alert-info'"><input type="radio" name="optionsOld" ng-model="$parent.formDiff.oldID" btn-radio="file.id" value="false"></div>
         </div>
     </div>
 </div>
@@ -59,13 +59,9 @@
             <span class="label label-info">File type:</span>
         </div>
         <div class="form-group">
-            <select class="form-control" ng-model="formUnpack.type" ng-options="thisType.type as thisType.name for thisType in types">
+            <select class="form-control" ng-model="formDiff.type" ng-options="thisType.type as thisType.name for thisType in types">
             </select>
         </div>
     </div>
 </form>
-<pre>
-    {{ newFile }}
-    {{ oldFile }}
-</pre>
 

@@ -11,6 +11,13 @@ class StorageController extends Controller{
         $task_name = $_POST["task_name"];
         if( ! $this->isStorageExists($task_name)  )
             $this->createStorage($task_name);
+        else
+        {
+            //just clear table
+            $sqlite = new SQLite3($this->getFilesDBDir($task_name));
+            $sqlite->exec("DELETE FROM Files");
+        }
+
 
         //time to save this data
         $filesArray = json_decode($_POST["files"]);
@@ -50,6 +57,11 @@ class StorageController extends Controller{
             $jsonObject["old"][] = $row;
 
         echo json_encode($jsonObject);
+    }
+    public function getFileByIdAPI()
+    {
+        $file = $this->getModel("Storage")->getFileById($_POST["task_name"],$_POST["id"]);
+        echo json_encode($file);
     }
 
 
