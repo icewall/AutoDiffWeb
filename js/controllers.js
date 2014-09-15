@@ -28,7 +28,7 @@ autoDiffControllers.controller("AddTaskController",['$scope','$http','$state',
             {name : "Automatically", type: "auto"},
             {name : "Manually", type: "manual"}
         ];
-        $scope.formData.mode = $scope.modes[0].type;
+        $scope.formData.mode = $scope.modes[1].type;
 
         $http.get('Agent/getAgents').success(
             function(data)
@@ -61,7 +61,16 @@ autoDiffControllers.controller("AddTaskController",['$scope','$http','$state',
 autoDiffControllers.controller("TabsCtrl",['$scope','$http','$state','$stateParams',
     function($scope, $http,$state,$stateParams) {
         console.log("TabsCtrl");
-
+        if(! $stateParams.hasOwnProperty("task_name") || $stateParams.task_name == null)
+        {
+            console.log("There is no task_name redirect to tasks ...");
+            $state.go("tasks");
+            return;
+        }
+        else
+        {
+            console.log($stateParams.task_name);
+        }
         /*
             Get agent name related with this task
          */
@@ -149,6 +158,7 @@ autoDiffControllers.controller("FilesController",['$scope',"$state","$stateParam
         */
         $scope.formAddDiffProcess = function()
         {
+            console.log("Adding diff");
             $scope.formDiff.task_name = $stateParams.task_name;
             $http.post("Diff/addDiff",$scope.formDiff);
         }
@@ -167,14 +177,39 @@ autoDiffControllers.controller("DiffedController",['$scope',"$state","$statePara
 
     }
 ]);
-autoDiffControllers.controller("LogController",['$scope',"$state","$stateParams","$http",
-    function($scope,$state,$stateParams,$http)
+autoDiffControllers.controller("LogController",['$scope',"$state","$stateParams","$http","$interval",
+    function($scope,$state,$stateParams,$http,$interval)
     {
+        var logHandler = undefined;
         console.log("LogController");
         $scope.log = "[+]Downloading patches...\n" +
             "Downloding file  	http://download.microsoft.com/download/8/4/B/84B4EA25-1933-484E-A8B8-AE07492AFC31/Windows6.0-KB2957689-x86.msu\n" +
             "Unpacker detected .msu package\n" +
             "Unpacking files...." +
             "";
+        if(!angular.isDefined(logHandler))
+        {
+            logHandler = $interval(function(){
+                $http.post("Logger/getLog",{task_name : $stateParams.task_name}).success(
+                    function(data)
+                    {
+                        if($scope.log !=  data)
+                        {
+                            $scope.log = data
+                        }
+                    }
+                );
+            },1000);
+        }
+
+
+        $scope.$on("$destroy",function(){
+            if(angular.isDefined(logHandler))
+            {
+                $interval.cancel(logHandler);
+                logHandler = undefined;
+            }
+        });
+
     }
 ]);

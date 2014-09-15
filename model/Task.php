@@ -64,11 +64,27 @@ class TaskModel extends Model{
         $statement->bindValue(":mode",$task["mode"]);
         $statement->execute();
         print_r($statement->errorInfo());
+        return $this->mDatabase->lastInsertId();
     }
     public function updateFiles($task_name,$amount)
     {
         $statement = $this->mDatabase->prepare("UPDATE Task SET files = :amount WHERE name = :task_name");
         $statement->bindValue(":amount",$amount);
+        $statement->bindValue(":task_name",$task_name);
+        $statement->execute();
+        print_r($statement->errorInfo());
+    }
+    public function incDiffedFiles($task_name)
+    {
+        $statement = $this->mDatabase->prepare("SELECT diffed FROM Task WHERE name = :task_name");
+        $statement->bindValue(":task_name",$task_name);
+        $statement->execute();
+        $diffed = $statement->fetch();
+        $diffed = $diffed["diffed"];
+        $diffed++;
+
+        $statement = $this->mDatabase->prepare("UPDATE Task SET diffed = :diffed WHERE name = :task_name");
+        $statement->bindValue(":diffed",$diffed);
         $statement->bindValue(":task_name",$task_name);
         $statement->execute();
         print_r($statement->errorInfo());

@@ -17,8 +17,10 @@ class DiffModel extends Model{
         $statement->bindValue(":diff_name",$params["diff_name"]);
         $statement->bindValue(":newID",$params["newID"]);
         $statement->bindValue(":oldID",$params["oldID"]);
-
         $statement->execute();
+        print_r($statement->errorInfo());
+
+        return $this->mDatabase->lastInsertId();
     }
     public function getDiff($id)
     {
@@ -30,5 +32,24 @@ class DiffModel extends Model{
             return Array();
 
         return $result;
+    }
+    public function saveResults($params)
+    {
+        $id = $params["id"];
+        $result = $params["result"]; //currently just changed f. amount
+        $changedFunctions = $result;
+        $changedFunctionsAutoDiff = 0;
+
+        $statement = $this->mDatabase->prepare("UPDATE Diff
+                                                SET changed_functions = :changed_functions,
+                                                autodiff_changed_functions = :autodiff_changed_functions,
+                                                status = 'end'
+                                                WHERE id = :id
+                                                ");
+        $statement->bindValue(":changed_functions",$changedFunctions);
+        $statement->bindValue(":autodiff_changed_functions",$changedFunctionsAutoDiff);
+        $statement->bindValue(":id",$id);
+        $statement->execute();
+        print_r($statement->errorInfo());
     }
 }

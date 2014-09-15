@@ -42,7 +42,7 @@ class StorageController extends Controller{
     public function getFiles()
     {
         $task_name = $_POST["task_name"];
-        if( ! $this->isStorageExists($task_name)  )
+        if( !$this->isStorageExists($task_name)  )
             return;
 
         $jsonObject = Array();
@@ -74,7 +74,7 @@ class StorageController extends Controller{
     }
     public function createStorage($task_name)
     {
-        @mkdir($this->getTaskDir($task_name),0777,true);
+//        @mkdir($this->getTaskDir($task_name),0777,true);
         $this->createFilesTable($task_name);
     }
     public function createFilesTable($task_name)

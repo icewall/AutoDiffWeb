@@ -7,7 +7,7 @@ class Controller {
         $model = "model/$modelName.php";
         if(file_exists($model))
         {
-            include $model;
+            include_once $model;
             $obj = $modelName."Model";
             return new $obj();
         }

@@ -1,0 +1,4 @@
+[+] Recursive unpacking known packages
+[+] Collecting results from diffing and sending them to backend
+[+] Sending logs from each module to backend
+[+] Present file version if possible on files tab

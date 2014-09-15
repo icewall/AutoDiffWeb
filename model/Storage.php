@@ -1,7 +1,7 @@
 <?php
 
 
-class StorageModel {
+class StorageModel{
     public function getFileById($task_name,$id)
     {
         $sqlite = new SQLite3($this->getFilesDBDir($task_name));

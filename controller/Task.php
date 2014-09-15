@@ -2,7 +2,9 @@
 
 include "controller/Controller.php";
 class TaskController extends Controller {
-
+    /*
+     * REST API
+     */
     public function getTasks()
     {
         $result = $this->getModel("Task")->getTasks();
@@ -42,6 +44,12 @@ class TaskController extends Controller {
 
     public function addTask()
     {
+        /*
+         * Create dir for storage & logs
+         */
+        $task_name = $_POST["name"];
+        @mkdir($this->getTaskDir($task_name),0777,true);
+
         $this->getModel("Task")->addTask($_POST);
 
         /*
@@ -54,4 +62,14 @@ class TaskController extends Controller {
         $this->getModel("Command")->addCommand($params);
     }
 
+
+    /*
+     * HELPERS
+     */
+
+    public function getTaskDir($task_name)
+    {
+        // e.g /var/www/patches/IE8
+        return ROOT_DIR . DIRECTORY_SEPARATOR . "patches".DIRECTORY_SEPARATOR . $task_name;
+    }
 }
