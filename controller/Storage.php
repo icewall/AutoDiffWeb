@@ -10,7 +10,9 @@ class StorageController extends Controller{
     {
         $task_name = $_POST["task_name"];
         if( ! $this->isStorageExists($task_name)  )
+        {
             $this->createStorage($task_name);
+        }
         else
         {
             //just clear table
@@ -70,7 +72,7 @@ class StorageController extends Controller{
     */
     public function isStorageExists($task_name)
     {
-        return file_exists($this->getTaskDir($task_name));
+        return file_exists($this->getFilesDBDir($task_name));
     }
     public function createStorage($task_name)
     {

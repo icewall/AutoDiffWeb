@@ -182,11 +182,7 @@ autoDiffControllers.controller("LogController",['$scope',"$state","$stateParams"
     {
         var logHandler = undefined;
         console.log("LogController");
-        $scope.log = "[+]Downloading patches...\n" +
-            "Downloding file  	http://download.microsoft.com/download/8/4/B/84B4EA25-1933-484E-A8B8-AE07492AFC31/Windows6.0-KB2957689-x86.msu\n" +
-            "Unpacker detected .msu package\n" +
-            "Unpacking files...." +
-            "";
+        $scope.log = "";
         if(!angular.isDefined(logHandler))
         {
             logHandler = $interval(function(){
